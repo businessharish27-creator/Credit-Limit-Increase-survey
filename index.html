@@ -200,43 +200,34 @@
 </form>
 
 <script>
-/* JavaScript copied directly from your input, adjusted for demonstration */
 const scriptURL = "https://script.google.com/macros/s/AKfycbzTzFOPpSXgCJuGeD_mU5unuB2PlWWcgByuVGTUtdVlHH-eXzIb60b3tDr92AdWnSxo_w/exec"; // <-- Replace with Apps Script Web App URL
 const form = document.getElementById('creditForm');
 const successMsg = document.getElementById('successMsg');
 
-// NOTE: The fetch functionality below is commented out for safe, standalone viewing. 
-// It assumes a backend script is available at scriptURL.
 form.addEventListener('submit', e => {
- e.preventDefault();
- 
- // Simulate success message without actually submitting data
- successMsg.style.display = 'block';
- form.reset();
- setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+    e.preventDefault();
 
- /*
- const formData = new FormData(form);
- const data = {};
+    const formData = new FormData(form);
+    const data = {};
 
- formData.forEach((value, key) => data[key] = value);
+    formData.forEach((value, key) => data[key] = value);
 
- fetch(scriptURL, {
-  method: 'POST',
-  mode: 'no-cors',
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
- }).then(() => {
-  successMsg.style.display = 'block';
-  form.reset();
-  setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
- }).catch(err => console.log("Error:", err));
- */
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).then(() => {
+        successMsg.style.display = 'block';
+        form.reset();
+        setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+    }).catch(err => console.log("Error:", err));
 });
 </script>
 
 </body>
 
 </html>
+
 
 
