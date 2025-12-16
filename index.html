@@ -108,31 +108,33 @@
   cursor: not-allowed;
  }
 
- .loader {
+ /* FULL PAGE LOADER */
+ .page-loader {
   display: none;
-  text-align: center;
-  margin-top: 15px;
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.9);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
  }
 
- .loader i {
-  font-size: 22px;
+ .page-loader i {
+  font-size: 36px;
   color: #B4985A;
- }
-
- .success-message {
-  display: none;
-  background: #e8f8ef;
-  border-left: 4px solid #3a8d5e;
-  color: #256d3a;
-  padding: 12px;
-  margin-top: 25px;
-  border-radius: 6px;
-  text-align: center;
+  margin-bottom: 10px;
  }
 </style>
 </head>
 
 <body>
+
+<!-- FULL PAGE LOADER -->
+<div class="page-loader" id="pageLoader">
+ <i class="fa fa-spinner fa-spin"></i>
+ <div>Submitting your response...</div>
+</div>
 
 <form class="form-container" id="creditForm">
  <img src="https://www.mawarid.ae/_next/image?url=%2Flogo%2Flogo-mawarid.png&w=1920&q=75" class="logo">
@@ -181,26 +183,17 @@
  </div>
 
  <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
-
- <div class="loader" id="loader">
-  <i class="fa fa-spinner fa-spin"></i>
- </div>
-
- <div class="success-message" id="successMsg">
-  Thank you! Your response has been recorded.
- </div>
 </form>
 
 <script>
 const scriptURL = "https://script.google.com/macros/s/AKfycbwR37tHV-f1V2ikIL1jgiTZ43cBPqrGbUkZUa6INtShttOtDA5KfZmQeuM97ZYWUWmLPg/exec";
 const form = document.getElementById("creditForm");
-const loader = document.getElementById("loader");
+const pageLoader = document.getElementById("pageLoader");
 const submitBtn = document.getElementById("submitBtn");
-const successMsg = document.getElementById("successMsg");
 
 form.addEventListener("submit", e => {
  e.preventDefault();
- loader.style.display = "block";
+ pageLoader.style.display = "flex";
  submitBtn.disabled = true;
 
  fetch(scriptURL, {
@@ -208,17 +201,12 @@ form.addEventListener("submit", e => {
   body: new FormData(form)
  })
  .then(() => {
-  loader.style.display = "none";
-  successMsg.style.display = "block";
-  form.reset();
-  submitBtn.disabled = false;
-
   setTimeout(() => {
-   successMsg.style.display = "none";
-  }, 4000);
+   window.location.href = "thankyou.html";
+  }, 2000);
  })
  .catch(() => {
-  loader.style.display = "none";
+  pageLoader.style.display = "none";
   submitBtn.disabled = false;
  });
 });
